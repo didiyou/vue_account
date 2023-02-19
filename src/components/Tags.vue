@@ -12,10 +12,8 @@
 
 <script lang="ts">
 import { TagHelper } from '@/mixins/TagHelper'
-import Vue from 'vue'
 import { mixins } from 'vue-class-component'
-import { Component, Prop } from 'vue-property-decorator'
-import oldStore from '../store/index2'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 
 @Component
 export default class Tags extends mixins(TagHelper) {
@@ -35,6 +33,7 @@ export default class Tags extends mixins(TagHelper) {
       this.selectedTags.push(item) }
     this.$emit('update:value', this.selectedTags)
   }
+  @Watch('value') fun(newVal){ this.selectedTags = newVal }
 }
 </script>
 
