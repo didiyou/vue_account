@@ -1,10 +1,12 @@
 <template>
         <svg class="icon">
-            <use :xlink:href="'#'+name"/>
+            <use :xlink:href="('#'+name)"/>
         </svg>
 </template>
 
 <script lang="ts">
+    declare var require: any
+
     let importAll = (requireContext:__WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext)
     try {importAll(require.context('../assets/icons',true,/\.svg$/))} catch(error) {console.log(error)}
     export default {
@@ -21,4 +23,5 @@
        overflow: hidden;
        
     }
+    
 </style>

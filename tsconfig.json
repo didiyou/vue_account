@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -34,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/models/recordList.ts"  ],
   "exclude": [
     "node_modules"
   ]

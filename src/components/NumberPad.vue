@@ -13,7 +13,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button class="ok">ok</button>
+      <button class="ok" @click="ok">ok</button>
       <button class="zero" @click="inputContent">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -22,10 +22,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component,Prop} from 'vue-property-decorator'
+import {Component,Prop, Inject, Watch} from 'vue-property-decorator'
 @Component
 export default class NumberPad extends Vue{
   @Prop() readonly value!:number
+  @Inject() reFresh
   output:string = this.value.toString()
   inputContent(event:MouseEvent){
     const button = (event.target as HTMLButtonElement)
@@ -39,18 +40,23 @@ export default class NumberPad extends Vue{
     else if(input === '.' && this.output.indexOf('.') >= 0){return}
     else {this.output += input}
   }
+  mounted() {
+    console.log('挂载了')
+  }
   remove(){
     if(this.output.length === 1){
       this.output = '0'
     }
-    console.log(1)
     this.output = this.output.slice(0,-1)
-    console.log(this.output)
   }
+  @Watch('output') fun(newa,old){console.log('更新了',newa)}
   clear(){this.output = '0'}
   ok(){
-    this.$emit('update:value',this.output)
-    this.$emit('submit',this.output)
+    const num = parseFloat(this.output)
+    this.$emit('update:value', num)
+    this.$emit('submit', num)
+    this.output = '0'
+    this.reFresh()
   }
 }
 </script>
